@@ -1,13 +1,11 @@
 %{?_javapackages_macros:%_javapackages_macros}
 Name:           apache-parent
-Version:        10
-Release:        13.1%{?dist}
-Summary:        Parent pom file for Apache projects
-
+Version:        16
+Release:        1%{?dist}
+Summary:        Parent POM file for Apache projects
 License:        ASL 2.0
 URL:            http://apache.org/
-Source0:        http://svn.apache.org/repos/asf/maven/pom/tags/apache-10/pom.xml
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Source0:        http://repo1.maven.org/maven2/org/apache/apache/%{version}/apache-%{version}-source-release.zip
 BuildArch:      noarch
 
 BuildRequires:  maven-local
@@ -20,16 +18,10 @@ Requires:       apache-resource-bundles
 %description
 This package contains the parent pom file for apache projects.
 
-
 %prep
-%setup -n %{name}-%{version} -Tc
+%setup -n apache-%{version}
 
-# This simplifies work with child projects that can use generics
-cp %{SOURCE0} .
-sed -i 's:<source>1.4</source>:<source>1.5</source>:' pom.xml
-sed -i 's:<target>1.4</target>:<target>1.5</target>:' pom.xml
-
-cp %{SOURCE1} LICENSE
+%pom_remove_plugin :maven-site-plugin pom.xml
 
 %build
 %mvn_build
@@ -38,9 +30,30 @@ cp %{SOURCE1} LICENSE
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Nov 17 2014 Mikolaj Izdebski <mizdebsk@redhat.com> - 16-1
+- Update to upstream version 16
+
+* Mon Sep 29 2014 Mikolaj Izdebski <mizdebsk@redhat.com> - 15-1
+- Update to upstream version 15
+
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 14-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
+* Wed May 28 2014 Mikolaj Izdebski <mizdebsk@redhat.com> - 14-2
+- Rebuild to regenerate Maven auto-requires
+
+* Mon Mar 10 2014 Mikolaj Izdebski <mizdebsk@redhat.com> - 14-1
+- Update to upstream version 14
+
+* Tue Mar 04 2014 Stanislav Ochotnicky <sochotnicky@redhat.com> - 10-15
+- Remove maven-site-plugin from dependencies
+
+* Fri Sep 20 2013 Mikolaj Izdebski <mizdebsk@redhat.com> - 10-14
+- Rebuild to regenerate Maven provides
+
 * Thu Aug 29 2013 Mikolaj Izdebski <mizdebsk@redhat.com> - 10-13
 - Add missing R: apache-resource-bundles
 
@@ -81,3 +94,4 @@ cp %{SOURCE1} LICENSE
 
 * Mon Aug 29 2011 Andy Grimm <agrimm@gmail.com> 10-1
 - Initial Build
+
