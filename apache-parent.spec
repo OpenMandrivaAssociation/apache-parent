@@ -4,7 +4,7 @@ Version:        16
 Release:        1%{?dist}
 Summary:        Parent POM file for Apache projects
 License:        ASL 2.0
-URL:            http://apache.org/
+URL:            https://apache.org/
 Source0:        http://repo1.maven.org/maven2/org/apache/apache/%{version}/apache-%{version}-source-release.zip
 BuildArch:      noarch
 
